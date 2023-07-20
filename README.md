@@ -22,6 +22,7 @@ So far there is just one 'tool', a CLI built with click that performs two functi
 
 A sample output for `benchmark`, run on 36b_buildings.csv, a 130 mb CSV file is:
 
+```
 ╒═══════════╤════════════════╤════════════════╤════════════════╤════════════════╕
 │ process   │ fgb            │ gpkg           │ parquet        │ shp            │
 ╞═══════════╪════════════════╪════════════════╪════════════════╪════════════════╡
@@ -31,6 +32,7 @@ A sample output for `benchmark`, run on 36b_buildings.csv, a 130 mb CSV file is:
 ├───────────┼────────────────┼────────────────┼────────────────┼────────────────┤
 │ pandas    │ 0:00:35.763740 │ 0:00:47.535597 │ 0:00:04.880124 │ 0:00:37.751942 │
 ╘═══════════╧════════════════╧════════════════╧════════════════╧════════════════╛
+```
 
 ## Format Notes
 
