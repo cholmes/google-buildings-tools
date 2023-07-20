@@ -3,7 +3,9 @@
 This repo is intended to be a set of useful scripts for working with Google's [Open Buildings](https://sites.research.google/open-buildings/)
 dataset, specifically to help translate it into [Cloud Native Geospatial](https://cloudnativegeo.org) formats. The outputs will live
 at https://beta.source.coop/cholmes/google-open-buildings so most people can just make use of those directly. But these are intended to
-show the process, and then they've expanded to be a way to benchmark performance.
+show the process, and then they've expanded to be a way to benchmark performance. It's an odd mix right now, if I have time I'll try to
+factor out an independent 'performance' CLI to compare processes without being specific to google open buildings and mixing in functionality
+like splitting multipolygons.
 
 This is basically my first Python project, and certainly my first open source one. It is only possible due to ChatGPT, as I'm not a python
 programmer, and not a great programmer in general (coded professionally for about 2 years, then shifted to doing lots of other stuff). So
@@ -11,7 +13,32 @@ it's likely not great code, but it's been fun to iterate on it and seems like it
 
 ## Installation
 
-Since this is my first python project I've yet to figure out how to make it easy to get all the dependencies, so for now look at them and pip install ;) I promise I'll consult chatgpt on this soon, or PR's and suggestions welcome. Hopefully I'll get it so there's a CLI tool that gets added to your path. Right now you have to run the program with a call like `python google-buildings-cli.py benchmark original-csv/36b_buildings.csv test-output --format parquet`
+Clone this repository and navigate into it:
+
+```sh
+git clone https://github.com/<your-github-username>/google-buildings-cli.git
+cd google-buildings-cli
+```
+
+Install dependencies and the cli
+
+```sh
+pip install -r requirements.txt
+pip install .
+```
+
+Now things may sorta work? I spent close to an hour battling this and it seems to install in the local repo directory, but not 
+in the venv / path for some reason. So theoretically you should be able to run `gob-tools benchmark 36b_buildings.csv test-output --format parquet`
+from anywhere and have it work. Right now it's only working for me in the repo directory. I think the safest thing is to just do 
+
+```
+python google-buildings-cli.py benchmark 36b_buildings.csv test-output --format parquet
+```
+
+with the python file. Any help is more than welcome. Maybe next I'll try poetry? This python package management shit is really as bad as everyone says, even
+ChatGPT wasn't able to get me there.
+
+The only CSV files that will work are those from Google's Open Buildings dataset.
 
 # Functionality
 
@@ -33,6 +60,39 @@ A sample output for `benchmark`, run on 36b_buildings.csv, a 130 mb CSV file is:
 │ pandas    │ 0:00:35.763740 │ 0:00:47.535597 │ 0:00:04.880124 │ 0:00:37.751942 │
 ╘═══════════╧════════════════╧════════════════╧════════════════╧════════════════╛
 ```
+
+The full options can be found with `--help` after each command, and I'll put them here for reference:
+
+```
+Usage: gob-tools convert [OPTIONS] INPUT_PATH OUTPUT_DIRECTORY
+
+Options:
+  --format [fgb|parquet|gpkg|shp]
+                                  The output format.
+  --overwrite                     Whether to overwrite existing output files.
+  --process [duckdb|pandas|ogr]   The processing method to use.
+  --skip-split-multis             Whether to keep multipolygons as they are
+                                  without splitting into their component
+                                  polygons.
+  --verbose                       Whether to print detailed processing
+                                  information.
+  --help                          Show this message and exit.
+```
+
+
+```
+Usage: gob-tools benchmark [OPTIONS] INPUT_PATH OUTPUT_DIRECTORY
+
+Options:
+  --processes TEXT      The processing methods to use.
+  --formats TEXT        The output formats.
+  --skip-split-multis   Whether to keep multipolygons as they are without
+                        splitting into their component polygons.
+  --no-gpq              Disable GPQ conversion.
+  --verbose             Whether to print detailed processing information.
+  --output-format TEXT  The format of the output. Options: ascii, csv, json.
+  --help                Show this message and exit.
+ ```
 
 ## Format Notes
 
