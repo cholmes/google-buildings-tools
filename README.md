@@ -64,3 +64,4 @@ I'll try to turn these into tickets, but just wanted to jot down some ways I've 
 * Add the splitting of multipolygons to the ogr process. This may need to make use of Fiona, but that may lose the speed of the [column-oriented API](https://gdal.org/development/rfc/rfc86_column_oriented_api.html) - so may be interesting to have both options to benchmark.
 * Include ability to get the source CSV's directly from the cloud, unzip them and process them.
 * Print out the file sizes of the resulting formats in the benchmark.
+* Add GeoJSON? It seems like crap for this goal of working with huge files, but could be interesting to show performance and size characteristics. I do love GeoJSON, it's one of the best formats, but this is not the use case for it.
