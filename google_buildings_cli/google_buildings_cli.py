@@ -18,7 +18,7 @@ from tabulate import tabulate
 # This is necessary because DuckDB does not write the GeoParquet metadata (yet). Once DuckDB implements
 # this feature can be removed. Setting it to false will give a sense of how fast DuckDB will be, but
 # if you want to actually use the output GeoParquet files, set it to True.
-RUN_GPQ_CONVERSION = True
+RUN_GPQ_CONVERSION = False
 
 # Global variable, that sets the compression type for the Parquet files. The two options that
 # will work for both DuckDB and pandas are 'snappy' and 'gzip'. 'snappy' is the default. You can

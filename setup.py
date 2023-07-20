@@ -2,22 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name='google-buildings-cli',
-    version='1.0.0',
+    version='0.1',
     packages=find_packages(),
-    include_package_data=True,
-    install_requires=[
-        'click',
-        'duckdb',
-        'pandas',
-        'geopandas',
-        'shapely',
-        'openlocationcode',
-        'tabulate'
-    ],
+    install_requires=open('requirements.txt').read().splitlines(),
     entry_points={
         'console_scripts': [
-            'gob-tools=google_buildings_cli:cli'
-        ]
+            'google-buildings-cli=google_buildings_cli:main',
+        ],
     },
-
 )
+
